@@ -16,7 +16,7 @@ let package = Package(
     targets: [
         .target(
             name: "UITestRunner",
-            dependencies: ["GherkParser"]),
+            dependencies: ["IOS-GherkParser"]),
         .testTarget(
             name: "UITestRunnerTests",
             dependencies: ["UITestRunner"]),
