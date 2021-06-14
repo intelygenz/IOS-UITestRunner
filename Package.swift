@@ -11,12 +11,12 @@ let package = Package(
             targets: ["UITestRunner"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/intelygenz/IOS-GherkParser", from: "0.5.0")
+        .package(name: "GherkParser", url: "https://github.com/intelygenz/IOS-GherkParser", .exact("0.5.0"))
     ],
     targets: [
         .target(
             name: "UITestRunner",
-            dependencies: ["IOS-GherkParser"]),
+            dependencies: ["GherkParser"]),
         .testTarget(
             name: "UITestRunnerTests",
             dependencies: ["UITestRunner"]),

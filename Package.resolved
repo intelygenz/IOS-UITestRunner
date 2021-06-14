@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "GherkParser",
+        "repositoryURL": "https://github.com/intelygenz/IOS-GherkParser",
+        "state": {
+          "branch": null,
+          "revision": "cc27e9059e38ba2f2c07d73fb77dea468bc8b47d",
+          "version": "0.5.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
