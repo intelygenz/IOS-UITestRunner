@@ -5,7 +5,7 @@ import GherkParser
 public class GherkinEngine {
     private static let parser = GherkParser()
     private static var map = [Bundle: GherkinTestRunner]()
-    static func getRunner(_ bundle: Bundle) -> GherkinTestRunner {
+    public static func getRunner(_ bundle: Bundle) -> GherkinTestRunner {
         guard let runner = map[bundle] else {
             let newRunner = GherkinTestRunner(bundle, parser)
             map[bundle] = newRunner
@@ -22,19 +22,19 @@ public class GherkinTestRunner {
     private var executedScenarios = [Scenario]()
     private lazy var features: [Feature] = try! parser.parse(bundle.resourceURL!)
 
-    init(_ bundle: Bundle, _ parser: GherkParser) {
+    public init(_ bundle: Bundle, _ parser: GherkParser) {
         self.bundle = bundle
         self.parser = parser
     }
 
-    func assertMissingScenarios() throws {
+    public func assertMissingScenarios() throws {
         let allTests: Set<TestCaseInfo> = Set(XCTestSuite(forBundlePath: bundle.bundlePath).allTestCaseInfo)
         var expectedTests: Set<TestCaseInfo> = Set(features.flatMap{ feature in feature.scenarios.map{ scenario in TestCaseInfo(name: feature.featureDescription.camelCaseify, testName: scenario.scenarioDescription.camelCaseify) } })
         expectedTests.subtract(allTests)
         XCTAssertTrue(expectedTests.isEmpty, "There are missing scenarios: \(expectedTests)")
     }
     
-    func assertScenario(_ featureName: String?, _ scenarioName: String? , _ build: @escaping (ScenarioBuilder) -> Void, _ background: @escaping (ScenarioBuilder) -> Void) throws {
+    public func assertScenario(_ featureName: String?, _ scenarioName: String? , _ build: @escaping (ScenarioBuilder) -> Void, _ background: @escaping (ScenarioBuilder) -> Void) throws {
         let featureId = try assertNotNil(featureName, "Feature Name must not be nil")
         let scenarioId = try assertNotNil(scenarioName, "Scenario Name must not be nil")
         let scenario = try assertExistsScenario(featureId, scenarioId)
