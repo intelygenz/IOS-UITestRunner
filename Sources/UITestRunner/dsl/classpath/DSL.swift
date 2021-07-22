@@ -1,18 +1,22 @@
 import Foundation
 import XCTest
 
+struct Pair: Hashable, Equatable {
+        let one: String
+        let second: String
+}
+
 fileprivate class ScenarioNotifier {
-    private static var list = [(String, String)]()
-    static func notify(_ feature: String, _ scenario: String) { list.append((feature, scenario)) }
-    static func get() -> [(String, String)] { list }
+    private static var list = [Pair]()
+    static func notify(_ feature: String, _ scenario: String) { list.append(Pair(one: feature,second: scenario)) }
+    static func get() -> Set<Pair> { Set(list) }
 }
 
 public extension GherkinTestRunner {
     
     func assertAllScenariosExecuted() throws {
-        let expected = features.flatMap { feature in feature.scenarios.map { (asFeatureId(feature.path.fileName), asScenarioId($0.description) )}}
-        let executed = ScenarioNotifier.get()
-        let nonExecuted = expected.filter { e in executed.contains(where: { $0.0 == e.0 && $0.1 == e.1 }) }
+        let expected = features.flatMap { feature in feature.scenarios.map { Pair(one: asFeatureId(feature.path.fileName).replacingOccurrences(of: ".feature", with: ""), second: asScenarioId($0.description) )}}
+        let nonExecuted = Set(expected).subtracting(ScenarioNotifier.get())
         if !nonExecuted.isEmpty {
             throw GherkRunnerError(message: "Some scenarios where not executed \(nonExecuted)")
         }

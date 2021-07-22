@@ -29,12 +29,24 @@ final class ClassPathTests: XCTestCase {
         }
 
     }
+    
+    func testAAA_AssertExecutedAllScenariosFails() throws {
+        let runner = try mockRunner()
+        XCTAssertThrowsError(try runner.assertAllScenariosExecuted())
+    }
+    
+    func testZZZ_AssertExecutedAllScenariosFails() throws {
+        let runner = try mockRunner()
+        try runner.assertAllScenariosExecuted()
+    }
 
     static var allTests = [
+        ("testAAA_AssertExecutedAllScenariosFails", testAAA_AssertExecutedAllScenariosFails),
         ("testRunScenario", testRunScenario),
         ("testRunScenarioByName", testRunScenarioByName),
         ("testRunScenarioByNameWithoutExtension", testRunScenarioByNameWithoutExtension),
-        ("testRunScenarioUndefinedStep", testRunScenarioUndefinedStep)
+        ("testRunScenarioUndefinedStep", testRunScenarioUndefinedStep),
+        ("testZZZ_AssertExecutedAllScenariosFails", testZZZ_AssertExecutedAllScenariosFails),
     ]
 }
 
