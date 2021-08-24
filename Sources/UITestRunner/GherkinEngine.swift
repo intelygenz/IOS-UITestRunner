@@ -134,7 +134,7 @@ private extension Scenario {
 
 private extension Feature {
     func matches(_ id: String) -> Bool {
-        description == id || description.classCamelCase == id || path == id || path.hasSuffix(id)
+        description == id || description.classCamelCase == id || path == id || path.hasSuffix(id) || path.hasSuffix("\(id).feature")
     }
 }
 
